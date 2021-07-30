@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.brito.bookstore.domain.Category;
 import com.brito.bookstore.repositories.CategoryRepository;
+import com.brito.bookstore.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -22,7 +23,8 @@ public class CategoryService {
 	public Category findById(Integer id) {
 		Optional<Category> optional = categoryRepository.findById(id);
 		
-		return optional.orElse(null);
+		return optional.orElseThrow(() -> new  ObjectNotFoundException("Objeto não"
+				+ "encontrado! " + id + Category.class.getName()));
 	}
 
 }
