@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brito.bookstore.domain.Category;
+import com.brito.bookstore.dtos.CategoryDTO;
 import com.brito.bookstore.repositories.CategoryRepository;
 import com.brito.bookstore.service.exceptions.ObjectNotFoundException;
 
@@ -21,10 +22,25 @@ public class CategoryService {
 	}
 	
 	public Category findById(Integer id) {
-		Optional<Category> optional = categoryRepository.findById(id);
+		Optional<Category> category = categoryRepository.findById(id);
 		
-		return optional.orElseThrow(() -> new  ObjectNotFoundException("Objeto não"
+		return category.orElseThrow(() -> new  ObjectNotFoundException("Objeto não"
 				+ "encontrado! " + id + Category.class.getName()));
+	}
+	
+	public Category create(Category category) {
+		category.setId(null);
+		
+		return categoryRepository.save(category);
+	}
+	
+	public Category update(Integer id, CategoryDTO categoryDTO) {
+		Category category = findById(id);
+		
+		category.setName(categoryDTO.getName());
+		category.setDescription(categoryDTO.getDescription());
+		
+		return categoryRepository.save(category);
 	}
 
 }
