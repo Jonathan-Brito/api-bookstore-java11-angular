@@ -4,8 +4,12 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +25,7 @@ import com.brito.bookstore.domain.Book;
 import com.brito.bookstore.dtos.BookDTO;
 import com.brito.bookstore.service.BookService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/books")
 public class BookController {
@@ -47,22 +52,22 @@ public class BookController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody Book obj){
+	public ResponseEntity<Book> update( @PathVariable Integer id, @Valid @RequestBody Book obj){
 		Book book = bookService.update(id, obj);
 		
 		return ResponseEntity.ok().body(book);
 	}
 	
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Book> updatePatch(@PathVariable Integer id, @RequestBody Book obj){
+	public ResponseEntity<Book> updatePatch( @PathVariable Integer id, @Valid @RequestBody Book obj){
 		Book book = bookService.update(id, obj);
 		
 		return ResponseEntity.ok().body(book);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Book> create(@RequestParam(value = "category", 
-			defaultValue = "0") Integer id_cat, @RequestBody Book obj){
+	public ResponseEntity<Book> create( @RequestParam(value = "category", 
+			defaultValue = "0") Integer id_cat, @Valid @RequestBody Book obj){
 		
 		Book book = bookService.create(id_cat, obj);
 		
@@ -72,6 +77,7 @@ public class BookController {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@DeleteMapping
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		bookService.delete(id);
 		
