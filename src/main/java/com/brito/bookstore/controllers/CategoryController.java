@@ -62,5 +62,11 @@ public class CategoryController {
 		
 		return ResponseEntity.ok().body(new CategoryDTO(category));
 	}
+	
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		categoryService.delete(id);
+		
+		return ResponseEntity.noContent().build();
+	}
 
 }

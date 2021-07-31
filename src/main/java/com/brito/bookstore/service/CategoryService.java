@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.brito.bookstore.domain.Category;
@@ -41,6 +42,18 @@ public class CategoryService {
 		category.setDescription(categoryDTO.getDescription());
 		
 		return categoryRepository.save(category);
+	}
+	
+	public void delete(Integer id) {
+		findById(id);
+		
+		try {
+			categoryRepository.deleteById(id);
+		} 
+		catch (DataIntegrityViolationException exception) {
+			throw new com.brito.bookstore.service.exceptions.DataIntegrityViolationException
+			("Category não pode ser deletado! Possui livros associados");
+		}
 	}
 
 }

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.brito</groupId>
-	<artifactId>api-bookstore</artifactId>
+	<artifactId>apibookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-bookstore</name>
-	<description>Project for Spring Boot and Angular</description>
+	<description>Project for Spring Boot and Angular </description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
